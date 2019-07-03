@@ -27,66 +27,6 @@ namespace ortc
 {
 
 
-//
-//	//warp
-	nlohmann::json getExtendedRtpCapabilities11(std::string& loaclCapsJson, std::string& remoteCapsJson)
-	{
-		nlohmann::json localCaps = loaclCapsJson;
-		nlohmann::json remoteCaps = remoteCapsJson;
-
-
-
-		nlohmann::json  ret = getExtendedRtpCapabilities(localCaps, remoteCaps);
-
-		return ret;
-	}
-//
-//
-//
-//
-//	nlohmann::json getRecvRtpCapabilities11(std::string& extendedRtpCapabilities){
-//
-//		nlohmann::json  extendedRtp =extendedRtpCapabilities;
-//
-//		nlohmann::json  respon= getRecvRtpCapabilities(extendedRtp);
-//		return  respon;
-//
-//	}
-//
-//	nlohmann::json getSendingRtpParameters11( std::string& kind,  std::string& extendedRtpCapabilities){
-//
-//
-//		nlohmann::json  extendedRtpCap =extendedRtpCapabilities;
-//
-//		nlohmann::json  resp =getSendingRtpParameters(kind,extendedRtpCap);
-//		return  resp;
-//
-//
-//	}
-//
-//	nlohmann::json getSendingRemoteRtpParameters11(const std::string& kind, const std::string& extendedRtpCapabilities){
-//
-//		nlohmann::json  extendedRtpCap =extendedRtpCapabilities;
-//		nlohmann::json  resp= getSendingRemoteRtpParameters(kind,extendedRtpCap);
-//		return  resp;
-//
-//	}
-//
-//	bool canSend11(const std::string& kind, const std::string& extendedRtpCapabilities){
-//
-//		nlohmann::json  ext =extendedRtpCapabilities;
-//		return canSend(kind,ext);
-//	}
-//	bool canReceive11(const std::string& rtpParameters, const std::string& extendedRtpCapabilities){
-//
-// 		nlohmann::json  rtp=rtpParameters;
-//		nlohmann::json  ext =extendedRtpCapabilities;
-//		return canReceive(rtp,ext);
-//	}
-
-
-
-
 	static uint8_t getH264PacketizationMode(const json& codec)
 	{
 
@@ -325,7 +265,7 @@ namespace ortc
 			auto jsonLocalCodecIt = std::find_if(
 			  localCodecs.begin(), localCodecs.end(), [&extendedCodec](const json& localCodec) {
 				  return isRtxCodec(localCodec) &&
-				         localCodec["parameters"]["apt"] == extendedCodec["localPayloadType"];
+				      localCodec["parameters"]["apt"]  == std::to_string(extendedCodec["localPayloadType"].get<int>());
 			  });
 
 			if (jsonLocalCodecIt == localCodecs.end())
@@ -337,7 +277,7 @@ namespace ortc
 			auto jsonRemoteCodecIt = std::find_if(
 			  remoteCodecs.begin(), remoteCodecs.end(), [&extendedCodec](const json& remoteCodec) {
 				  return isRtxCodec(remoteCodec) &&
-				         remoteCodec["parameters"]["apt"] == extendedCodec["remotePayloadType"];
+				         remoteCodec["parameters"]["apt"] == std::to_string(extendedCodec["remotePayloadType"].get<int>());
 			  });
 
 			if (jsonRemoteCodecIt == remoteCodecs.end())
@@ -388,6 +328,10 @@ namespace ortc
 					extendedExt["direction"] = "recvonly";
 				else if (remoteExtDirection == "inactive")
 					extendedExt["direction"] = "inactive";
+				else{
+                    extendedExt["direction"] = "sendrecv";
+				}
+
 			}
 
 			extendedRtpCapabilities["headerExtensions"].push_back(extendedExt);

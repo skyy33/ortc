@@ -7,205 +7,15 @@ import android.widget.TextView;
 
 import com.vrv.ortc.ORTC;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
     // Used to load the 'native-lib' library on application startup.
 
-     String ss ="{\n" +
-             "\"codecs\": [{\n" +
-             "\"kind\": \"audio\",\n" +
-             "\"mimeType\": \"audio/opus\",\n" +
-             "\"clockRate\": 48000,\n" +
-             "\"channels\": 2,\n" +
-             "\"preferredPayloadType\": 100,\n" +
-             "\"parameters\": {},\n" +
-             "\"rtcpFeedback\": []\n" +
-             "}, {\n" +
-             "\"kind\": \"video\",\n" +
-             "\"mimeType\": \"video/VP8\",\n" +
-             "\"clockRate\": 90000,\n" +
-             "\"rtcpFeedback\": [{\n" +
-             "\"type\": \"nack\"\n" +
-             "}, {\n" +
-             "\"type\": \"nack\",\n" +
-             "\"parameter\": \"pli\"\n" +
-             "}, {\n" +
-             "\"type\": \"ccm\",\n" +
-             "\"parameter\": \"fir\"\n" +
-             "}, {\n" +
-             "\"type\": \"goog-remb\"\n" +
-             "}, {\n" +
-             "\"type\": \"transport-cc\"\n" +
-             "}],\n" +
-             "\"preferredPayloadType\": 101,\n" +
-             "\"parameters\": {\n" +
-             "\"x-google-start-bitrate\": 1000\n" +
-             "}\n" +
-             "}, {\n" +
-             "\"kind\": \"video\",\n" +
-             "\"mimeType\": \"video/rtx\",\n" +
-             "\"preferredPayloadType\": 102,\n" +
-             "\"clockRate\": 90000,\n" +
-             "\"rtcpFeedback\": [],\n" +
-             "\"parameters\": {\n" +
-             "\"apt\": 101\n" +
-             "}\n" +
-             "}, {\n" +
-             "\"kind\": \"video\",\n" +
-             "\"mimeType\": \"video/H264\",\n" +
-             "\"clockRate\": 90000,\n" +
-             "\"parameters\": {\n" +
-             "\"packetization-mode\": 1,\n" +
-             "\"level-asymmetry-allowed\": 1,\n" +
-             "\"profile-level-id\": \"4d0032\",\n" +
-             "\"x-google-start-bitrate\": 1000\n" +
-             "},\n" +
-             "\"rtcpFeedback\": [{\n" +
-             "\"type\": \"nack\"\n" +
-             "}, {\n" +
-             "\"type\": \"nack\",\n" +
-             "\"parameter\": \"pli\"\n" +
-             "}, {\n" +
-             "\"type\": \"ccm\",\n" +
-             "\"parameter\": \"fir\"\n" +
-             "}, {\n" +
-             "\"type\": \"goog-remb\"\n" +
-             "}, {\n" +
-             "\"type\": \"transport-cc\"\n" +
-             "}],\n" +
-             "\"preferredPayloadType\": 103\n" +
-             "}, {\n" +
-             "\"kind\": \"video\",\n" +
-             "\"mimeType\": \"video/rtx\",\n" +
-             "\"preferredPayloadType\": 104,\n" +
-             "\"clockRate\": 90000,\n" +
-             "\"rtcpFeedback\": [],\n" +
-             "\"parameters\": {\n" +
-             "\"apt\": 103\n" +
-             "}\n" +
-             "}, {\n" +
-             "\"kind\": \"video\",\n" +
-             "\"mimeType\": \"video/H264\",\n" +
-             "\"clockRate\": 90000,\n" +
-             "\"parameters\": {\n" +
-             "\"packetization-mode\": 1,\n" +
-             "\"level-asymmetry-allowed\": 1,\n" +
-             "\"profile-level-id\": \"42e01f\",\n" +
-             "\"x-google-start-bitrate\": 1000\n" +
-             "},\n" +
-             "\"rtcpFeedback\": [{\n" +
-             "\"type\": \"nack\"\n" +
-             "}, {\n" +
-             "\"type\": \"nack\",\n" +
-             "\"parameter\": \"pli\"\n" +
-             "}, {\n" +
-             "\"type\": \"ccm\",\n" +
-             "\"parameter\": \"fir\"\n" +
-             "}, {\n" +
-             "\"type\": \"goog-remb\"\n" +
-             "}, {\n" +
-             "\"type\": \"transport-cc\"\n" +
-             "}],\n" +
-             "\"preferredPayloadType\": 105\n" +
-             "}, {\n" +
-             "\"kind\": \"video\",\n" +
-             "\"mimeType\": \"video/rtx\",\n" +
-             "\"preferredPayloadType\": 106,\n" +
-             "\"clockRate\": 90000,\n" +
-             "\"rtcpFeedback\": [],\n" +
-             "\"parameters\": {\n" +
-             "\"apt\": 105\n" +
-             "}\n" +
-             "}],\n" +
-             "\"headerExtensions\": [{\n" +
-             "\"kind\": \"audio\",\n" +
-             "\"uri\": \"urn:ietf:params:rtp-hdrext:sdes:mid\",\n" +
-             "\"preferredId\": 1,\n" +
-             "\"preferredEncrypt\": false,\n" +
-             "\"direction\": \"recvonly\"\n" +
-             "}, {\n" +
-             "\"kind\": \"video\",\n" +
-             "\"uri\": \"urn:ietf:params:rtp-hdrext:sdes:mid\",\n" +
-             "\"preferredId\": 1,\n" +
-             "\"preferredEncrypt\": false,\n" +
-             "\"direction\": \"recvonly\"\n" +
-             "}, {\n" +
-             "\"kind\": \"video\",\n" +
-             "\"uri\": \"urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id\",\n" +
-             "\"preferredId\": 2,\n" +
-             "\"preferredEncrypt\": false,\n" +
-             "\"direction\": \"recvonly\"\n" +
-             "}, {\n" +
-             "\"kind\": \"video\",\n" +
-             "\"uri\": \"urn:ietf:params:rtp-hdrext:sdes:repaired-rtp-stream-id\",\n" +
-             "\"preferredId\": 3,\n" +
-             "\"preferredEncrypt\": false,\n" +
-             "\"direction\": \"recvonly\"\n" +
-             "}, {\n" +
-             "\"kind\": \"audio\",\n" +
-             "\"uri\": \"http://www.webrtc.org/experiments/rtp-hdrext/abs-send-time\",\n" +
-             "\"preferredId\": 4,\n" +
-             "\"preferredEncrypt\": false,\n" +
-             "\"direction\": \"sendrecv\"\n" +
-             "}, {\n" +
-             "\"kind\": \"video\",\n" +
-             "\"uri\": \"http://www.webrtc.org/experiments/rtp-hdrext/abs-send-time\",\n" +
-             "\"preferredId\": 4,\n" +
-             "\"preferredEncrypt\": false,\n" +
-             "\"direction\": \"sendrecv\"\n" +
-             "}, {\n" +
-             "\"kind\": \"audio\",\n" +
-             "\"uri\": \"http://www.ietf.org/id/draft-holmer-rmcat-transport-wide-cc-extensions-01\",\n" +
-             "\"preferredId\": 5,\n" +
-             "\"preferredEncrypt\": false,\n" +
-             "\"direction\": \"inactive\"\n" +
-             "}, {\n" +
-             "\"kind\": \"video\",\n" +
-             "\"uri\": \"http://www.ietf.org/id/draft-holmer-rmcat-transport-wide-cc-extensions-01\",\n" +
-             "\"preferredId\": 5,\n" +
-             "\"preferredEncrypt\": false,\n" +
-             "\"direction\": \"inactive\"\n" +
-             "}, {\n" +
-             "\"kind\": \"video\",\n" +
-             "\"uri\": \"http://tools.ietf.org/html/draft-ietf-avtext-framemarking-07\",\n" +
-             "\"preferredId\": 6,\n" +
-             "\"preferredEncrypt\": false,\n" +
-             "\"direction\": \"sendrecv\"\n" +
-             "}, {\n" +
-             "\"kind\": \"video\",\n" +
-             "\"uri\": \"urn:ietf:params:rtp-hdrext:framemarking\",\n" +
-             "\"preferredId\": 7,\n" +
-             "\"preferredEncrypt\": false,\n" +
-             "\"direction\": \"sendrecv\"\n" +
-             "}, {\n" +
-             "\"kind\": \"audio\",\n" +
-             "\"uri\": \"urn:ietf:params:rtp-hdrext:ssrc-audio-level\",\n" +
-             "\"preferredId\": 10,\n" +
-             "\"preferredEncrypt\": false,\n" +
-             "\"direction\": \"sendrecv\"\n" +
-             "}, {\n" +
-             "\"kind\": \"video\",\n" +
-             "\"uri\": \"urn:3gpp:video-orientation\",\n" +
-             "\"preferredId\": 11,\n" +
-             "\"preferredEncrypt\": false,\n" +
-             "\"direction\": \"sendrecv\"\n" +
-             "}, {\n" +
-             "\"kind\": \"video\",\n" +
-             "\"uri\": \"urn:ietf:params:rtp-hdrext:toffset\",\n" +
-             "\"preferredId\": 12,\n" +
-             "\"preferredEncrypt\": false,\n" +
-             "\"direction\": \"sendrecv\"\n" +
-             "}],\n" +
-             "\"fecMechanisms\": []\n" +
-             "}";
 
+    String router="{\"codecs\":[{\"kind\":\"audio\",\"mimeType\":\"audio/opus\",\"clockRate\":48000,\"channels\":2,\"preferredPayloadType\":100,\"parameters\":{},\"rtcpFeedback\":[]},{\"kind\":\"video\",\"mimeType\":\"video/VP8\",\"clockRate\":90000,\"rtcpFeedback\":[{\"type\":\"nack\"},{\"type\":\"nack\",\"parameter\":\"pli\"},{\"type\":\"ccm\",\"parameter\":\"fir\"},{\"type\":\"goog-remb\"},{\"type\":\"transport-cc\"}],\"preferredPayloadType\":101,\"parameters\":{\"x-google-start-bitrate\":1000}},{\"kind\":\"video\",\"mimeType\":\"video/rtx\",\"preferredPayloadType\":102,\"clockRate\":90000,\"rtcpFeedback\":[],\"parameters\":{\"apt\":101}},{\"kind\":\"video\",\"mimeType\":\"video/H264\",\"clockRate\":90000,\"parameters\":{\"packetization-mode\":1,\"level-asymmetry-allowed\":1,\"profile-level-id\":\"4d0032\",\"x-google-start-bitrate\":1000},\"rtcpFeedback\":[{\"type\":\"nack\"},{\"type\":\"nack\",\"parameter\":\"pli\"},{\"type\":\"ccm\",\"parameter\":\"fir\"},{\"type\":\"goog-remb\"},{\"type\":\"transport-cc\"}],\"preferredPayloadType\":103},{\"kind\":\"video\",\"mimeType\":\"video/rtx\",\"preferredPayloadType\":104,\"clockRate\":90000,\"rtcpFeedback\":[],\"parameters\":{\"apt\":103}},{\"kind\":\"video\",\"mimeType\":\"video/H264\",\"clockRate\":90000,\"parameters\":{\"packetization-mode\":1,\"level-asymmetry-allowed\":1,\"profile-level-id\":\"42e01f\",\"x-google-start-bitrate\":1000},\"rtcpFeedback\":[{\"type\":\"nack\"},{\"type\":\"nack\",\"parameter\":\"pli\"},{\"type\":\"ccm\",\"parameter\":\"fir\"},{\"type\":\"goog-remb\"},{\"type\":\"transport-cc\"}],\"preferredPayloadType\":105},{\"kind\":\"video\",\"mimeType\":\"video/rtx\",\"preferredPayloadType\":106,\"clockRate\":90000,\"rtcpFeedback\":[],\"parameters\":{\"apt\":105}}],\"headerExtensions\":[{\"kind\":\"audio\",\"uri\":\"urn:ietf:params:rtp-hdrext:sdes:mid\",\"preferredId\":1,\"preferredEncrypt\":false,\"direction\":\"recvonly\"},{\"kind\":\"video\",\"uri\":\"urn:ietf:params:rtp-hdrext:sdes:mid\",\"preferredId\":1,\"preferredEncrypt\":false,\"direction\":\"recvonly\"},{\"kind\":\"video\",\"uri\":\"urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id\",\"preferredId\":2,\"preferredEncrypt\":false,\"direction\":\"recvonly\"},{\"kind\":\"video\",\"uri\":\"urn:ietf:params:rtp-hdrext:sdes:repaired-rtp-stream-id\",\"preferredId\":3,\"preferredEncrypt\":false,\"direction\":\"recvonly\"},{\"kind\":\"audio\",\"uri\":\"http://www.webrtc.org/experiments/rtp-hdrext/abs-send-time\",\"preferredId\":4,\"preferredEncrypt\":false,\"direction\":\"sendrecv\"},{\"kind\":\"video\",\"uri\":\"http://www.webrtc.org/experiments/rtp-hdrext/abs-send-time\",\"preferredId\":4,\"preferredEncrypt\":false,\"direction\":\"sendrecv\"},{\"kind\":\"audio\",\"uri\":\"http://www.ietf.org/id/draft-holmer-rmcat-transport-wide-cc-extensions-01\",\"preferredId\":5,\"preferredEncrypt\":false,\"direction\":\"inactive\"},{\"kind\":\"video\",\"uri\":\"http://www.ietf.org/id/draft-holmer-rmcat-transport-wide-cc-extensions-01\",\"preferredId\":5,\"preferredEncrypt\":false,\"direction\":\"inactive\"},{\"kind\":\"video\",\"uri\":\"http://tools.ietf.org/html/draft-ietf-avtext-framemarking-07\",\"preferredId\":6,\"preferredEncrypt\":false,\"direction\":\"sendrecv\"},{\"kind\":\"video\",\"uri\":\"urn:ietf:params:rtp-hdrext:framemarking\",\"preferredId\":7,\"preferredEncrypt\":false,\"direction\":\"sendrecv\"},{\"kind\":\"audio\",\"uri\":\"urn:ietf:params:rtp-hdrext:ssrc-audio-level\",\"preferredId\":10,\"preferredEncrypt\":false,\"direction\":\"sendrecv\"},{\"kind\":\"video\",\"uri\":\"urn:3gpp:video-orientation\",\"preferredId\":11,\"preferredEncrypt\":false,\"direction\":\"sendrecv\"},{\"kind\":\"video\",\"uri\":\"urn:ietf:params:rtp-hdrext:toffset\",\"preferredId\":12,\"preferredEncrypt\":false,\"direction\":\"sendrecv\"}],\"fecMechanisms\":[]}";
 
-
-
+    String local="{\"headerExtensions\":[{\"kind\":\"audio\",\"uri\":\"urn:ietf:params:rtp-hdrext:ssrc-audio-level\",\"preferredId\":1},{\"kind\":\"audio\",\"uri\":\"urn:ietf:params:rtp-hdrext:sdes:mid\",\"preferredId\":9},{\"kind\":\"audio\",\"uri\":\"urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id\",\"preferredId\":13},{\"kind\":\"audio\",\"uri\":\"urn:ietf:params:rtp-hdrext:sdes:repaired-rtp-stream-id\",\"preferredId\":14},{\"kind\":\"video\",\"uri\":\"urn:ietf:params:rtp-hdrext:toffset\",\"preferredId\":2},{\"kind\":\"video\",\"uri\":\"http://www.webrtc.org/experiments/rtp-hdrext/abs-send-time\",\"preferredId\":3},{\"kind\":\"video\",\"uri\":\"urn:3gpp:video-orientation\",\"preferredId\":4},{\"kind\":\"video\",\"uri\":\"http://www.ietf.org/id/draft-holmer-rmcat-transport-wide-cc-extensions-01\",\"preferredId\":5},{\"kind\":\"video\",\"uri\":\"http://www.webrtc.org/experiments/rtp-hdrext/playout-delay\",\"preferredId\":6},{\"kind\":\"video\",\"uri\":\"http://www.webrtc.org/experiments/rtp-hdrext/video-content-type\",\"preferredId\":7},{\"kind\":\"video\",\"uri\":\"http://www.webrtc.org/experiments/rtp-hdrext/video-timing\",\"preferredId\":8},{\"kind\":\"video\",\"uri\":\"http://tools.ietf.org/html/draft-ietf-avtext-framemarking-07\",\"preferredId\":10},{\"kind\":\"video\",\"uri\":\"http://www.webrtc.org/experiments/rtp-hdrext/color-space\",\"preferredId\":12},{\"kind\":\"video\",\"uri\":\"urn:ietf:params:rtp-hdrext:sdes:mid\",\"preferredId\":9},{\"kind\":\"video\",\"uri\":\"urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id\",\"preferredId\":13},{\"kind\":\"video\",\"uri\":\"urn:ietf:params:rtp-hdrext:sdes:repaired-rtp-stream-id\",\"preferredId\":14}],\"fecMechanisms\":[],\"codecs\":[{\"mimeType\":\"audio/PCMA\",\"kind\":\"audio\",\"clockRate\":8000,\"preferredPayloadType\":8,\"channels\":1,\"rtcpFeedback\":[]},{\"mimeType\":\"audio/telephone-event\",\"kind\":\"audio\",\"clockRate\":48000,\"preferredPayloadType\":110,\"channels\":1,\"rtcpFeedback\":[]},{\"mimeType\":\"audio/CN\",\"kind\":\"audio\",\"clockRate\":8000,\"preferredPayloadType\":13,\"channels\":1,\"rtcpFeedback\":[]},{\"mimeType\":\"audio/ISAC\",\"kind\":\"audio\",\"clockRate\":16000,\"preferredPayloadType\":103,\"channels\":1,\"rtcpFeedback\":[]},{\"mimeType\":\"video/rtx\",\"kind\":\"video\",\"clockRate\":90000,\"preferredPayloadType\":101,\"rtcpFeedback\":[],\"parameters\":{\"apt\":\"100\"}},{\"mimeType\":\"audio/telephone-event\",\"kind\":\"audio\",\"clockRate\":16000,\"preferredPayloadType\":113,\"channels\":1,\"rtcpFeedback\":[]},{\"mimeType\":\"video/ulpfec\",\"kind\":\"video\",\"clockRate\":90000,\"preferredPayloadType\":104,\"rtcpFeedback\":[]},{\"mimeType\":\"video/rtx\",\"kind\":\"video\",\"clockRate\":90000,\"preferredPayloadType\":125,\"rtcpFeedback\":[],\"parameters\":{\"apt\":\"127\"}},{\"mimeType\":\"video/rtx\",\"kind\":\"video\",\"clockRate\":90000,\"preferredPayloadType\":97,\"rtcpFeedback\":[],\"parameters\":{\"apt\":\"96\"}},{\"mimeType\":\"audio/CN\",\"kind\":\"audio\",\"clockRate\":16000,\"preferredPayloadType\":105,\"channels\":1,\"rtcpFeedback\":[]},{\"mimeType\":\"video/VP9\",\"kind\":\"video\",\"clockRate\":90000,\"preferredPayloadType\":98,\"rtcpFeedback\":[{\"type\":\"goog-remb\"},{\"type\":\"transport-cc\"},{\"type\":\"ccm\",\"parameter\":\"fir\"},{\"type\":\"nack\"},{\"type\":\"nack\",\"parameter\":\"pli\"}]},{\"mimeType\":\"audio/PCMU\",\"kind\":\"audio\",\"clockRate\":8000,\"preferredPayloadType\":0,\"channels\":1,\"rtcpFeedback\":[]},{\"mimeType\":\"video/rtx\",\"kind\":\"video\",\"clockRate\":90000,\"preferredPayloadType\":99,\"rtcpFeedback\":[],\"parameters\":{\"apt\":\"98\"}},{\"mimeType\":\"audio/opus\",\"kind\":\"audio\",\"clockRate\":48000,\"preferredPayloadType\":111,\"channels\":2,\"rtcpFeedback\":[{\"type\":\"transport-cc\"}],\"parameters\":{\"minptime\":\"10\",\"useinbandfec\":\"1\"}},{\"mimeType\":\"audio/G722\",\"kind\":\"audio\",\"clockRate\":8000,\"preferredPayloadType\":9,\"channels\":1,\"rtcpFeedback\":[]},{\"mimeType\":\"audio/telephone-event\",\"kind\":\"audio\",\"clockRate\":8000,\"preferredPayloadType\":126,\"channels\":1,\"rtcpFeedback\":[]},{\"mimeType\":\"video/VP8\",\"kind\":\"video\",\"clockRate\":90000,\"preferredPayloadType\":96,\"rtcpFeedback\":[{\"type\":\"goog-remb\"},{\"type\":\"transport-cc\"},{\"type\":\"ccm\",\"parameter\":\"fir\"},{\"type\":\"nack\"},{\"type\":\"nack\",\"parameter\":\"pli\"}]},{\"mimeType\":\"video/H264\",\"kind\":\"video\",\"clockRate\":90000,\"preferredPayloadType\":100,\"rtcpFeedback\":[{\"type\":\"goog-remb\"},{\"type\":\"transport-cc\"},{\"type\":\"ccm\",\"parameter\":\"fir\"},{\"type\":\"nack\"},{\"type\":\"nack\",\"parameter\":\"pli\"}],\"parameters\":{\"level-asymmetry-allowed\":1,\"packetization-mode\":1,\"profile-level-id\":\"42e01f\"}},{\"mimeType\":\"audio/ILBC\",\"kind\":\"audio\",\"clockRate\":8000,\"preferredPayloadType\":102,\"channels\":1,\"rtcpFeedback\":[]},{\"mimeType\":\"video/red\",\"kind\":\"video\",\"clockRate\":90000,\"preferredPayloadType\":127,\"rtcpFeedback\":[]}]}";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -219,7 +29,8 @@ public class MainActivity extends AppCompatActivity {
         tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tv.setText(ORTC.getExtendedRtpCapabilities(ss,ss));
+                String sss=ORTC.getExtendedRtpCapabilities(local,router);
+                tv.setText(sss);
 
             }
         });
