@@ -534,7 +534,7 @@ namespace ortc
 			json ext =
 			{
 				{ "uri", extendedExtension["uri"]    },
-				{ "id",  extendedExtension["recvId"] }
+				{ "id",  extendedExtension["sendId"] }
 			};
 			/* clang-format on */
 
@@ -638,7 +638,7 @@ namespace ortc
 			json ext =
 			{
 				{ "uri", extendedExtension["uri"]    },
-				{ "id",  extendedExtension["recvId"] }
+				{ "id",  extendedExtension["sendId"] }
 			};
 			/* clang-format on */
 
